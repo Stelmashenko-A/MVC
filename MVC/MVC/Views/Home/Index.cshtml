@@ -1,0 +1,73 @@
+﻿@model MVC.Models.Graph
+@{
+    ViewBag.Title = "View";
+}
+<script src="~/Scripts/JavaScript/Table.js"></script>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+
+@using (Html.BeginForm("Input", "Home", FormMethod.Post, new { id = "form" }))
+{
+    
+    <div>
+        @Html.LabelFor(m => m.Alpha)
+        @Html.TextBoxFor(m => m.Alpha)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Beta)
+        @Html.TextBoxFor(m => m.Beta)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Ro)
+        @Html.TextBoxFor(m => m.Ro)
+    </div>
+    <input id="post" type="button" value="Input" />
+}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#post').click(function (event) {
+            event.preventDefault();
+
+            $.ajax({
+                url: '@Url.Action("Input", "Home")',
+                type: "post",
+                data: $('#form').serialize(),
+                success: function (data) {
+                    alert("bingo post");
+                },
+                error: function (data) {
+                    alert("not bingo post");
+                }
+            });
+        });
+    });
+</script>
+
+<input id="inputFile" type="file" name="inputFile" style="display: none;" />
+<button id="id">Open file</button>
+
+<script type="text/javascript">
+    $(document).ready($('#id').on('click', function() {
+        $('#inputFile').trigger('click');
+    }));
+
+    $(document).ready($('#inputFile').on('change', function (evt) {
+        var formData = new FormData();
+        var file = evt.target.files[0];
+        formData.append("inputFile", file);
+        $.ajax({
+            url: '@Url.Action("InputFile", "Home")',
+            type: "post",
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function (data) {
+                alert("bingo inputMatrix");
+            },
+            error: function (data) {
+                alert("not bingo inputMatrix");
+            }
+        });
+    }));
+</script>
