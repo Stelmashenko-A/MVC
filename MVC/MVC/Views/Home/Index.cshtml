@@ -20,6 +20,7 @@
         @Html.LabelFor(m => m.Ro)
         @Html.TextBoxFor(m => m.Ro)
     </div>
+    <div id="tableInput"></div>
     <input id="post" type="button" value="Input" />
 }
 
@@ -63,6 +64,8 @@
             processData: false,
             data: formData,
             success: function (data) {
+                $('#tableInput').append(CreateTableByMatrix(data));
+                alert(data);
                 alert("bingo inputMatrix");
             },
             error: function (data) {

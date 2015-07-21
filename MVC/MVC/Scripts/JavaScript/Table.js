@@ -40,16 +40,16 @@ function CreateTable(size) {
 function CreateTableByMatrix(matrix) {
 
     var str = "";
-
-    for (var i = 0; i < matrix.length; i++) {
+    var size = Math.sqrt(matrix.length);
+    for (var i = 0; i < size; i++) {
         str += "<tr>";
-        for (var j = 0; j < matrix.length; j++) {
-            var tmp = (i * matrix.length + j);
+        for (var j = 0; j < size; j++) {
+
             str += '<td width=50height=50>' +
 
                             '<input type="text" id="Array' +
                             //+ ' name="Array[' + (i * matrix.length + j) + "]" +
-                            '"value="' + matrix[i][j] + '" ' +
+                            '"value="' + matrix[i*size+j] + '" ' +
 
                             '"style="width: 100%; height: inherit; box-sizing: border-box;">' +
 

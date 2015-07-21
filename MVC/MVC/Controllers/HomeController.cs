@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
+﻿using System;
 using System.IO;
 using System.Web.Mvc;
-using DiGraph.MMAS;
 using MVC.Models;
 
 namespace MVC.Controllers
@@ -29,20 +27,26 @@ namespace MVC.Controllers
         }
 
         [HttpPost]
-        public string InputFile(Graph i)
+        public ActionResult InputFile(Graph i)
         {
             var file = Request.Files["inputFile"];
-            if (file == null) return "";
+            if (file == null) return null;
             using (var reader = new StreamReader(file.InputStream))
             {
                 var dataFromFile = reader.ReadToEnd();
                 var str = dataFromFile;
-                var minMaxAntSystem = new MinMaxAntSystem {Alfa = 0.5, Beta = 0.5, Ro = 0.1};
+                var strs = str.Split(' ');
+                var size = (int) Math.Sqrt(strs.Length);
+                var array=new double[size,size];
+                for (var k = 0; k < size; k++)
+                {
+                    for (var n = 0; n < size; n++)
+                    {
+                        array[k,n] = double.Parse(strs[k*size+n]);
+                    }
+                }
+                return Json(array);
 
-                List<int> path;
-                double length;
-                minMaxAntSystem.FindPath(CreateStreamFromString(str), out path, out length);
-                return length.ToString(CultureInfo.InvariantCulture);
             }
         }
 
