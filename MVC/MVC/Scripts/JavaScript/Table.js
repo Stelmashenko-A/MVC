@@ -47,11 +47,11 @@ function CreateTableByMatrix(matrix) {
 
             str += '<td width=50height=50>' +
 
-                            '<input type="text" id="Array' +
-                            //+ ' name="Array[' + (i * matrix.length + j) + "]" +
-                            '"value="' + matrix[i*size+j] + '" ' +
+                            '<input type="text" id="Array[' + (i * size + j).toString() + ']"'
+                            + ' name="Array[' + (i * size + j).toString() + ']"' +
+                            'value="' + matrix[i*size+j] + '" ' +
 
-                            '"style="width: 100%; height: inherit; box-sizing: border-box;">' +
+                            'style="width: 100%; height: inherit; box-sizing: border-box;">' +
 
 
                 "</td>";
