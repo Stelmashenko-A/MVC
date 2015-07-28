@@ -18,7 +18,9 @@ namespace MVC.Unity
         {
             var container = new UnityContainer();
             container.RegisterType<IAlgorithm, MinMaxAntSystem>();
-            //container.RegisterType<IRepository, FileRepository>();
+            container.RegisterType<IArrayRepository, ArrayRepository>();
+            container.RegisterType<IParametersRepository, ParametersRepository>();
+            container.RegisterType<IResultRepository, ResultRepositoty>();
             MvcUnityContainer.Container = container;
             return container;
         }

@@ -4,11 +4,11 @@ using MVC.Models;
 
 namespace MVC.Repository
 {
-    public interface IResultRepository:IRepository<Result>
+    public interface IResultRepository:IRepository<Results>
     {
     }
 
-    class ResultRepositoty : Repository<Result>, IResultRepository
+    class ResultRepositoty : Repository<Results>, IResultRepository
     {
 
     }

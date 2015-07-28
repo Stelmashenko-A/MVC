@@ -4,7 +4,7 @@ using MVC.Models;
 
 namespace MVC.Repository
 {
-    interface IArrayRepository:IRepository<Arrays>
+    public interface IArrayRepository:IRepository<Arrays>
     {
     }
 

@@ -11,17 +11,19 @@ namespace MVC.Controllers
 {
     public class HomeController : Controller
     {
-        public HomeController(IAlgorithm algorithm)
+        public HomeController(IAlgorithm algorithm, IArrayRepository arrayRepository, IParametersRepository parametersRepository, IResultRepository resultRepository)
         {
             Algorithm = algorithm;
-            ArrayRepository r = new ArrayRepository();
-            var str = r.Get(1);
-            Console.Write(str);
-            var strs = r.GetAll();
+            _arrayRepository = arrayRepository;
+            _parametersRepository = parametersRepository;
+            _resultRepository = resultRepository;
         }
 
         // GET: Home
         private IAlgorithm Algorithm { get; set; }
+        private IResultRepository _resultRepository;
+        private IArrayRepository _arrayRepository;
+        private IParametersRepository _parametersRepository;
         
         [HttpGet]
         public ActionResult Index()
