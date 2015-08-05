@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using MVC.DataBase;
-using MVC.Models;
+﻿using MVC.Models;
 
 namespace MVC.Repository
 {

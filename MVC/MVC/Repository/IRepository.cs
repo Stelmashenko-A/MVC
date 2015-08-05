@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MVC.Repository
 {
@@ -12,6 +9,7 @@ namespace MVC.Repository
         T Get(int id); // получение одного объекта по id
         void Delete(int id); // удаление объекта по id
         void Save();  // сохранение изменений
+        void Add(T obj);
     }
 }
 

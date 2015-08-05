@@ -1,29 +1,21 @@
-﻿@model MVC.Models.Graph
+﻿@using MVC.Models
+@model Graph
 @{
     ViewBag.Title = "View";
 }
 <script src="~/Scripts/JavaScript/Table.js"></script>
 <script src="~/Scripts/jquery-1.10.2.js"></script>
 
+
 @using (Html.BeginForm("Input", "Home", FormMethod.Post, new { id = "form" }))
 {
-    
-    <div>
-        @Html.LabelFor(m => m.Alpha)
-        @Html.TextBoxFor(m => m.Alpha)
-    </div>
-    <div>
-        @Html.LabelFor(m => m.Beta)
-        @Html.TextBoxFor(m => m.Beta)
-    </div>
-    <div>
-        @Html.LabelFor(m => m.Ro)
-        @Html.TextBoxFor(m => m.Ro)
-    </div>
+
     <div id="tableInput"></div>
+
     <input id="post" type="button" value="Input" />
 }
 
+@{Html.RenderPartial("ParamsView", new Parameters());}
 <script type="text/javascript">
 
     $(document).ready(function () {

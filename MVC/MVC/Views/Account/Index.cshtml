@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Регистрация";
+}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+
+<h2>Регистрация</h2>
+    <div id="input"></div>
+<button id="Register">Registration</button>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $.ajax({
+                url: '@Url.Action("Login", "Account")',
+                type: 'GET'
+
+            })
+            .success(function(result) {
+                $('#input').append(result);
+            })
+            .error(function() {
+                alert("qwer");
+            });
+
+        $('#Register').on('click', function() {
+            $.ajax({
+                    url: '@Url.Action("Register", "Account")',
+                    type: 'GET'
+
+                })
+                .success(function(result) {
+                    $('#input').empty();
+                    $('#input').append(result);
+                })
+                .error(function() {
+                });
+        });
+    });
+</script>

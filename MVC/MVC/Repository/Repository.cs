@@ -1,3 +1,4 @@
+using System.Data.Entity;
 using System.Linq;
 using MVC.DataBase;
 
@@ -5,7 +6,7 @@ namespace MVC.Repository
 {
     internal abstract class Repository<T> : IRepository<T> where T : class
     {
-        private readonly DataBase.NewDataBase _newDataBaseContext = new DataBase.NewDataBase();
+        protected readonly ForMVC NewDataBaseContext = new ForMVC();
 
         public void Dispose()
         {
@@ -14,24 +15,31 @@ namespace MVC.Repository
 
         public IQueryable<T> GetAll()
         {
-            return _newDataBaseContext.Set<T>().AsQueryable();
+            return NewDataBaseContext.Set<T>().AsQueryable();
         }
 
         public T Get(int id)
         {
-            return _newDataBaseContext.Set<T>().Find(id);
+            return NewDataBaseContext.Set<T>().Find(id);
         }
 
         public void Delete(int id)
         {
             //todo: спросить про сохранение базы, про создание абстрактного класса
-            _newDataBaseContext.Set<T>().Remove(_newDataBaseContext.Set<T>().Find(id));
-
+            NewDataBaseContext.Set<T>().Remove(NewDataBaseContext.Set<T>().Find(id));
+            NewDataBaseContext.SaveChanges();
         }
 
         public void Save()
         {
-            _newDataBaseContext.SaveChanges();
+            NewDataBaseContext.SaveChanges();
+        }
+
+        public void Add(T obj)
+        {
+            NewDataBaseContext.Set<T>().Attach(obj);
+            NewDataBaseContext.Entry(obj).State=EntityState.Added;
+            NewDataBaseContext.SaveChanges();
         }
     }
 }

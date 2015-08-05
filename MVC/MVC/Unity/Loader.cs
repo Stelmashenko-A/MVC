@@ -14,6 +14,7 @@ namespace MVC.Unity
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
             return container;
         }
+
         private static IUnityContainer BuildUnityContainer()
         {
             var container = new UnityContainer();

@@ -9,5 +9,10 @@ namespace MVC.Models
         public string Beta { get; set; }
         public string Ro { get; set; }
         public List<double> Array { get; set; }
+
+        public bool IsValid
+        {
+            get { return Array != null && Array.Count != 0; }
+        }
     }
 }

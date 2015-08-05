@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Web.Mvc;
 using DiGraph.MMAS;
 using MVC.Models;
@@ -17,14 +16,16 @@ namespace MVC.Controllers
             _arrayRepository = arrayRepository;
             _parametersRepository = parametersRepository;
             _resultRepository = resultRepository;
+            
         }
 
         // GET: Home
         private IAlgorithm Algorithm { get; set; }
         private IResultRepository _resultRepository;
-        private IArrayRepository _arrayRepository;
-        private IParametersRepository _parametersRepository;
-        
+        private readonly IArrayRepository _arrayRepository;
+        private readonly IParametersRepository _parametersRepository;
+
+        [Authorize]
         [HttpGet]
         public ActionResult Index()
         {
@@ -37,25 +38,32 @@ namespace MVC.Controllers
             return null;
         }
 
-        /*[HttpPost]
-        public ActionResult GetNames()
+        public ActionResult Index(Params p)
         {
-            return Json(Repository.Get().ToArray());
-        }*/
+            return View();
+        }
+
+        [HttpPost]
         public ActionResult Input(Graph i)
         {
-            Algorithm.Alfa = double.Parse(i.Alpha);
-            Algorithm.Beta = double.Parse(i.Beta);
-            Algorithm.Ro = double.Parse(i.Ro);
-            List<int> path;
-            double length;
-            Algorithm.FindPath(CreateStreamFromArray(i.Array.ToArray()), out path, out length);
+            var arrays = new Arrays { Matrix = ConvertListToMatrix(i.Array) };
+            arrays.Id = arrays.GetHashCode();
+            _arrayRepository.Add(arrays);
             return View("Index", i);
+        }
+
+        [HttpPost]
+        public ActionResult InputParams(Parameters i)
+        {
+            i.Id = i.GetHashCode();
+            _parametersRepository.Add(i);
+           return View("Index");
         }
 
         [HttpPost]
         public ActionResult InputFile(Graph i)
         {
+
             var file = Request.Files["inputFile"];
             if (file == null) return null;
             using (var reader = new StreamReader(file.InputStream))
@@ -73,22 +81,20 @@ namespace MVC.Controllers
                     }
                 }
                 return Json(array);
-
             }
         }
 
-        private static Stream CreateStreamFromArray(double[] arr)
+        private static List<List<double>> ConvertListToMatrix(List<double> arr)
         {
-            Stream stream = new MemoryStream();
-            var sw = new StreamWriter(stream);
-            foreach (var VARIABLE in arr)
+            int count = (int) Math.Sqrt(arr.Count);
+            var result = new List<List<double>>();
+            for (int i = 0; i < count; i++)
             {
-                sw.Write(VARIABLE);
-                sw.Write(" ");
+                var tmp = new List<double>(arr.GetRange(i*count, count));
+                result.Add(tmp);
             }
-            sw.Flush();
-            stream.Position = 0;
-            return stream;
+            return result;
+
         }
     }
 }

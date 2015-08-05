@@ -3,14 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MVC.Models
 {
-    public class Results
+    public class User
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
-        public string Path { get; set; }
-        public System.Single Length { get; set; }
-        public int ParametersId { get; set; }
-        public int ArraysId { get; set; }
+        public string Name { get; set; }
+        public string Password { get; set; }
     }
 }

@@ -1,0 +1,46 @@
+﻿@model MVC.Models.Parameters
+
+
+@using (Html.BeginForm("InputParams", "Home", FormMethod.Post, new {id = "form1"}))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Parameters</h4>
+        <hr/>
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+        <div>
+            @Html.LabelFor(model => model.Alpha)
+            <div>
+                @Html.EditorFor(model => model.Alpha)
+                @Html.ValidationMessageFor(model => model.Alpha)
+            </div>
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.Beta)
+            <div>
+                @Html.EditorFor(model => model.Beta)
+                @Html.ValidationMessageFor(model => model.Beta)
+            </div>
+        </div>
+
+        <div >
+            @Html.LabelFor(model => model.Ro)
+            <div >
+                @Html.EditorFor(model => model.Ro)
+                @Html.ValidationMessageFor(model => model.Ro, "")
+            </div>
+        </div>
+
+        <div >
+            <div >
+                <input type="submit" value="Create" id="postParams"/>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
