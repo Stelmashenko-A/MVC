@@ -3,9 +3,9 @@ using MVC.Models;
 
 namespace MVC.Repository
 {
-    interface IAccountRepository:IRepository<LoginModel>
+    interface IAccountRepository:IRepository<User>
     {
-        User GetUser(LoginModel model);
-        AccountRepositoryState AddUnique(RegisterModel model);
+        User GetUser(string name, string passwordHash);
+        AccountRepositoryState AddUnique(User model);
     }
 }

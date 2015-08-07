@@ -4,7 +4,7 @@ using MVC.Models;
 namespace MVC.DataBase
 {
 
-    public class ForMVC : DbContext
+    public class ForMvc : DbContext
     {
         public DbSet<Arrays> Arrays { get; set; }
         public DbSet<Parameters> Parameters { get; set; }

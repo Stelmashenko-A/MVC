@@ -6,7 +6,7 @@ namespace MVC.Repository
 {
     internal abstract class Repository<T> : IRepository<T> where T : class
     {
-        protected readonly ForMVC NewDataBaseContext = new ForMVC();
+        protected readonly ForMvc NewDataBaseContext = new ForMvc();
 
         public void Dispose()
         {

@@ -10,11 +10,14 @@
 @using (Html.BeginForm("Input", "Home", FormMethod.Post, new { id = "form" }))
 {
 
+    
     <div id="tableInput"></div>
-
+    <input id="inputFile" type="file" name="inputFile" style="display: none;" />
+    
     <input id="post" type="button" value="Input" />
 }
 
+<button id="id">Open file</button>
 @{Html.RenderPartial("ParamsView", new Parameters());}
 <script type="text/javascript">
 
@@ -37,8 +40,7 @@
     });
 </script>
 
-<input id="inputFile" type="file" name="inputFile" style="display: none;" />
-<button id="id">Open file</button>
+
 
 <script type="text/javascript">
     $(document).ready($('#id').on('click', function() {
@@ -56,8 +58,9 @@
             processData: false,
             data: formData,
             success: function (data) {
-                $('#tableInput').append(CreateTableByMatrix(data));
                 alert(data);
+                $('#tableInput').append(CreateTableByMatrix(data));
+                
                 alert("bingo inputMatrix");
             },
             error: function (data) {

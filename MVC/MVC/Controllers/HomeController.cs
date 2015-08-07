@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Policy;
 using System.Web.Mvc;
 using DiGraph.MMAS;
 using MVC.Models;
@@ -8,6 +9,7 @@ using MVC.Repository;
 
 namespace MVC.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         public HomeController(IAlgorithm algorithm, IArrayRepository arrayRepository, IParametersRepository parametersRepository, IResultRepository resultRepository)
@@ -25,10 +27,11 @@ namespace MVC.Controllers
         private readonly IArrayRepository _arrayRepository;
         private readonly IParametersRepository _parametersRepository;
 
-        [Authorize]
+        
         [HttpGet]
         public ActionResult Index()
         {
+            
             return View();
         }
 
@@ -46,7 +49,8 @@ namespace MVC.Controllers
         [HttpPost]
         public ActionResult Input(Graph i)
         {
-            var arrays = new Arrays { Matrix = ConvertListToMatrix(i.Array) };
+            if (!i.IsValid) return View("Index", i);
+            var arrays = new Arrays {Matrix = ConvertListToMatrix(i.Array)};
             arrays.Id = arrays.GetHashCode();
             _arrayRepository.Add(arrays);
             return View("Index", i);
@@ -86,9 +90,9 @@ namespace MVC.Controllers
 
         private static List<List<double>> ConvertListToMatrix(List<double> arr)
         {
-            int count = (int) Math.Sqrt(arr.Count);
+            var count = (int) Math.Sqrt(arr.Count);
             var result = new List<List<double>>();
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
                 var tmp = new List<double>(arr.GetRange(i*count, count));
                 result.Add(tmp);

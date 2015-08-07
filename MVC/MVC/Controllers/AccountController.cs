@@ -8,7 +8,14 @@ namespace MVC.Controllers
 {
     public class AccountController : Controller
     {
+        private ICryptor _cryptor;
         readonly IAccountRepository _accountRepository = new AccountRepository();
+
+        public AccountController(ICryptor cryptor)
+        {
+            _cryptor = cryptor;
+        }
+
         // GET: Account
         public ActionResult Index()
         {
@@ -17,11 +24,11 @@ namespace MVC.Controllers
         
         public ActionResult Login(LoginModel model)
         {
+
             if (ModelState.IsValid)
             {
-
-                User user = null;
-                user = _accountRepository.GetUser(model);
+              
+                var user = _accountRepository.GetUser(model.Name, _cryptor.Encrypt(model.Password));
                 if (user != null)
                 {
                     FormsAuthentication.SetAuthCookie(model.Name, true);
@@ -52,7 +59,7 @@ namespace MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = _accountRepository.AddUnique(model);
+                var result = _accountRepository.AddUnique(new User(model.Name,_cryptor.Encrypt(model.Password)));
                 if (result == AccountRepositoryState.Success)
                 {
                     FormsAuthentication.SetAuthCookie(model.Name, true);

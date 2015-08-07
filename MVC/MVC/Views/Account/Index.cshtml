@@ -16,7 +16,6 @@
         $.ajax({
                 url: '@Url.Action("Login", "Account")',
                 type: 'GET'
-
             })
             .success(function(result) {
                 $('#input').append(result);

@@ -192,6 +192,8 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Authentication\Encryptor.cs" />
+    <Compile Include="Authentication\ICryptor.cs" />
     <Compile Include="Authentication\LoginModel.cs" />
     <Compile Include="Authentication\RegisterModel.cs" />
     <Compile Include="Authentication\UserContext .cs" />
