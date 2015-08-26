@@ -3,7 +3,7 @@ using AntAlgorithm.Graph;
 
 namespace AntAlgorithm.Algorithm
 {
-    internal interface IStandartAntAlgorithm : IAlgorithm<IGraph, IList<IVertex>>
+    public interface IStandartAntAlgorithm : IAlgorithm<IGraph, IList<IVertex>>
     {
     }
 }

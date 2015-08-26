@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Web.Mvc;
-using DiGraph.MMAS;
+using AntAlgorithm.Graph;
+//using DiGraph.MMAS;
 using MVC.AOP;
 using MVC.Models;
 using MVC.Repository;
+using Graph = MVC.Models.Graph;
 
 namespace MVC.Controllers
 {
@@ -13,17 +15,17 @@ namespace MVC.Controllers
     [Authorize]
     public class HomeController : ErrorController
     {
-        public HomeController(IAlgorithm algorithm, IArrayRepository arrayRepository,
+        public HomeController(AntAlgorithm.Algorithm.StandartAlgoritmBuilder algorithm, IArrayRepository arrayRepository,
             IParametersRepository parametersRepository, IResultRepository resultRepository)
         {
-            Algorithm = algorithm;
+            Algorithm = algorithm.GetAlgorithm(0.5, 0.5, 100, 20);
             _arrayRepository = arrayRepository;
             _parametersRepository = parametersRepository;
             _resultRepository = resultRepository;
         }
 
         // GET: Home
-        private IAlgorithm Algorithm { get; set; }
+        private AntAlgorithm.Algorithm.IAlgorithm<IGraph,IList<IVertex>> Algorithm { get; set; }
         private IResultRepository _resultRepository;
         private readonly IArrayRepository _arrayRepository;
         private readonly IParametersRepository _parametersRepository;
@@ -66,7 +68,7 @@ namespace MVC.Controllers
         public ActionResult InputParams(Parameters i)
         {
 
-                throw new NotImplementedException();
+
 
             i.Id = i.GetHashCode();
             _parametersRepository.Add(i);
