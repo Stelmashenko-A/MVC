@@ -2,13 +2,11 @@
 
 namespace MVC.Repository
 {
-    public interface IArrayRepository:IRepository<Arrays>
+    public interface IArrayRepository : IRepository<Arrays>
     {
     }
 
-    class ArrayRepository : Repository<Arrays>,IArrayRepository
+    internal class ArrayRepository : Repository<Arrays>, IArrayRepository
     {
-
-       
     }
 }

@@ -2,12 +2,11 @@
 
 namespace MVC.Repository
 {
-    public interface IResultRepository:IRepository<Results>
+    public interface IResultRepository : IRepository<Results>
     {
     }
 
-    class ResultRepositoty : Repository<Results>, IResultRepository
+    internal class ResultRepositoty : Repository<Results>, IResultRepository
     {
-
     }
 }

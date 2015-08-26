@@ -6,21 +6,17 @@
 <script src="~/Scripts/JavaScript/Table.js"></script>
 <script src="~/Scripts/jquery-1.10.2.js"></script>
 
-
 @using (Html.BeginForm("Input", "Home", FormMethod.Post, new { id = "form" }))
 {
-
-    
     <div id="tableInput"></div>
     <input id="inputFile" type="file" name="inputFile" style="display: none;" />
-    
     <input id="post" type="button" value="Input" />
 }
-
 <button id="id">Open file</button>
-@{Html.RenderPartial("ParamsView", new Parameters());}
-<script type="text/javascript">
 
+@{Html.RenderPartial("ParamsView", new Parameters());}
+
+<script type="text/javascript">
     $(document).ready(function () {
         $('#post').click(function (event) {
             event.preventDefault();
@@ -39,8 +35,6 @@
         });
     });
 </script>
-
-
 
 <script type="text/javascript">
     $(document).ready($('#id').on('click', function() {

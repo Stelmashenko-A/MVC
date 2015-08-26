@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Security.Policy;
 using System.Web.Mvc;
 using DiGraph.MMAS;
+using MVC.AOP;
 using MVC.Models;
 using MVC.Repository;
 
 namespace MVC.Controllers
 {
+    [LogAspect]
     [Authorize]
-    public class HomeController : Controller
+    public class HomeController : ErrorController
     {
-        public HomeController(IAlgorithm algorithm, IArrayRepository arrayRepository, IParametersRepository parametersRepository, IResultRepository resultRepository)
+        public HomeController(IAlgorithm algorithm, IArrayRepository arrayRepository,
+            IParametersRepository parametersRepository, IResultRepository resultRepository)
         {
             Algorithm = algorithm;
             _arrayRepository = arrayRepository;
             _parametersRepository = parametersRepository;
             _resultRepository = resultRepository;
-            
         }
 
         // GET: Home
@@ -27,11 +28,11 @@ namespace MVC.Controllers
         private readonly IArrayRepository _arrayRepository;
         private readonly IParametersRepository _parametersRepository;
 
-        
+
         [HttpGet]
         public ActionResult Index()
         {
-            
+
             return View();
         }
 
@@ -44,6 +45,11 @@ namespace MVC.Controllers
         public ActionResult Index(Params p)
         {
             return View();
+        }
+
+        public ActionResult Error()
+        {
+            return View("Error");
         }
 
         [HttpPost]
@@ -59,15 +65,17 @@ namespace MVC.Controllers
         [HttpPost]
         public ActionResult InputParams(Parameters i)
         {
+
+                throw new NotImplementedException();
+
             i.Id = i.GetHashCode();
             _parametersRepository.Add(i);
-           return View("Index");
+            return View("Index");
         }
 
         [HttpPost]
         public ActionResult InputFile(Graph i)
         {
-
             var file = Request.Files["inputFile"];
             if (file == null) return null;
             using (var reader = new StreamReader(file.InputStream))
@@ -98,6 +106,17 @@ namespace MVC.Controllers
                 result.Add(tmp);
             }
             return result;
+
+        }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            Exception exception = filterContext.Exception;
+            //Logging the Exception
+            filterContext.ExceptionHandled = true;
+
+
+            filterContext.Result = this.RedirectToAction("Error", "Home");
 
         }
     }

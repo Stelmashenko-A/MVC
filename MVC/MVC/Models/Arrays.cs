@@ -18,7 +18,5 @@ namespace MVC.Models
             get { return Json.Encode(Matrix); }
             set { Matrix = Json.Decode<List<List<double>>>(value); }
         }
-
-
     }
 }

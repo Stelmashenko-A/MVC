@@ -1,5 +1,6 @@
 using System.Data.Entity;
 using System.Linq;
+using MVC.AOP;
 using MVC.DataBase;
 
 namespace MVC.Repository
@@ -10,35 +11,42 @@ namespace MVC.Repository
 
         public void Dispose()
         {
-            //todo: спросить про dispose
+            if (NewDataBaseContext != null)
+            {
+                NewDataBaseContext.Dispose();
+            }
         }
 
+        [TransactionAspect]
         public IQueryable<T> GetAll()
         {
             return NewDataBaseContext.Set<T>().AsQueryable();
         }
 
+        [TransactionAspect]
         public T Get(int id)
         {
             return NewDataBaseContext.Set<T>().Find(id);
         }
 
+        [TransactionAspect]
         public void Delete(int id)
         {
-            //todo: спросить про сохранение базы, про создание абстрактного класса
             NewDataBaseContext.Set<T>().Remove(NewDataBaseContext.Set<T>().Find(id));
             NewDataBaseContext.SaveChanges();
         }
 
+        [TransactionAspect]
         public void Save()
         {
             NewDataBaseContext.SaveChanges();
         }
 
+        [TransactionAspect]
         public void Add(T obj)
         {
             NewDataBaseContext.Set<T>().Attach(obj);
-            NewDataBaseContext.Entry(obj).State=EntityState.Added;
+            NewDataBaseContext.Entry(obj).State = EntityState.Added;
             NewDataBaseContext.SaveChanges();
         }
     }

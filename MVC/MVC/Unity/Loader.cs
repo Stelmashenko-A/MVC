@@ -2,6 +2,7 @@
 using DiGraph.MMAS;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Mvc;
+using MVC.AOP;
 using MVC.Authentication;
 using MVC.Repository;
 
@@ -24,6 +25,8 @@ namespace MVC.Unity
             container.RegisterType<IParametersRepository, ParametersRepository>();
             container.RegisterType<IResultRepository, ResultRepositoty>();
             container.RegisterType<ICryptor, PassCryptor>();
+            container.RegisterType<IAccountRepository, AccountRepository>();
+            container.RegisterType<IConverter, JsonConverter>();
             MvcUnityContainer.Container = container;
             return container;
         }
