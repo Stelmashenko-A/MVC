@@ -28,6 +28,7 @@ namespace MVC.Unity
             container.RegisterType<IAccountRepository, AccountRepository>();
             container.RegisterType<IConverter, JsonConverter>();
             MvcUnityContainer.Container = container;
+            int i = 0;
             return container;
         }
     }
